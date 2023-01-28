@@ -60,7 +60,7 @@
 
         <TextView
             android:id="@+id/upgrade_price"
-            android:text="Price: none"
+            android:text="Price: 4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
