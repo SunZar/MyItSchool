@@ -21,6 +21,7 @@
             <TextView
                 android:id="@+id/money_name"
                 android:text="My money: "
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
@@ -28,6 +29,7 @@
             <TextView
                 android:id="@+id/money_count"
                 android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"/>
@@ -37,8 +39,9 @@
         <Button
             android:id="@+id/button_money"
             android:text="Click!"
+            android:textSize="30dp"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:gravity="center"/>
 
 
@@ -47,23 +50,59 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="400dp"
+        android:layout_height="200dp"
         android:orientation="vertical"
         android:gravity="bottom">
 
-        <Button
-            android:id="@+id/button_upgrade"
-            android:text="Upgrade"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-        <TextView
-            android:id="@+id/upgrade_price"
-            android:text="Price: 4"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/button_upgrade_add_money"
+                android:text="Upgrade money"
+                android:textSize="12dp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:id="@+id/button_upgrade_offline_money"
+                android:text="Upgrade offline"
+                android:textSize="12dp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/upgrade_add_money_price"
+                android:text="Price: 20"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/upgrade_offline_money_price"
+                android:text="Price: 200"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 
@@ -74,6 +113,7 @@
         <Button
             android:id="@+id/button_save"
             android:text="Save"
+            android:textSize="12dp"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>
@@ -81,6 +121,7 @@
         <Button
             android:id="@+id/button_load"
             android:text="Load"
+            android:textSize="12dp"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"/>

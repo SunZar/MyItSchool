@@ -16,13 +16,17 @@ public class MainActivity extends AppCompatActivity {
     private String moneyStr;
     private int money;
 
-    private int levelUpgrade = 1;
+    private int levelUpgradeAddMoney = 1;
+    private int levelUpgradeOfflineMoney = 0;
 
     private int addMoney = 1;
+    private int offlineMoney = 0;
 
     SharedPreferences mySP;
     final int SAVE_MONEY = 0;
-    final int SAVE_LEVEL_UPGRADE = 1;
+    final int SAVE_LEVEL_UPGRADE_ADD_MONEY = 1;
+    final int SAVE_LEVEL_UPGRADE_OFFLINE_MONEY = 0;
+    final int SAVE_OFFLINE_MONEY = 0;
     final int SAVE_ADD_MONEY = 1;
 
     @Override
@@ -32,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        if (getPreferences(MODE_PRIVATE).getInt(String.valueOf(SAVE_LEVEL_UPGRADE), 1) != 1) {
+        if (getPreferences(MODE_PRIVATE).getInt(String.valueOf(SAVE_LEVEL_UPGRADE_ADD_MONEY), 1) != 1) {
             mySP = getPreferences(MODE_PRIVATE);
-            int saveInt = mySP.getInt(String.valueOf(SAVE_LEVEL_UPGRADE), 1);
-            levelUpgrade = saveInt;
+            int saveInt = mySP.getInt(String.valueOf(SAVE_LEVEL_UPGRADE_ADD_MONEY), 1);
+            levelUpgradeAddMoney = saveInt;
         }
 
         if (getPreferences(MODE_PRIVATE).getInt(String.valueOf(SAVE_ADD_MONEY), 1) != 1) {
@@ -51,10 +55,11 @@ public class MainActivity extends AppCompatActivity {
         }
         if (savedInstanceState != null) {
             binding.moneyCount.setText(Integer.toString(savedInstanceState.getInt("money")));
-            levelUpgrade = savedInstanceState.getInt("levelUpgrade");
+            levelUpgradeAddMoney = savedInstanceState.getInt("levelUpgradeAddMoney");
             addMoney = savedInstanceState.getInt("addMoney");
         }
-        binding.upgradePrice.setText("Price: " + Integer.toString(addMoney * 20));
+        binding.upgradeAddMoneyPrice.setText("Price: " + Integer.toString(addMoney * 20));
+        binding.upgradeOfflineMoneyPrice.setText("Price: " + Integer.toString((offlineMoney + 1) * 200));
 
         binding.buttonMoney.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,18 +71,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.buttonUpgrade.setOnClickListener(new View.OnClickListener() {
+        binding.buttonUpgradeAddMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Integer.parseInt(binding.moneyCount.getText().toString()) >= addMoney * 20) {
                     binding.moneyCount.setText(
                             Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) - addMoney * 20)
                     );
-                    levelUpgrade = levelUpgrade + 1;
+                    levelUpgradeAddMoney = levelUpgradeAddMoney + 1;
                     addMoney = addMoney + 1;
-                    binding.upgradePrice.setText("Price: " + Integer.toString(addMoney * 20));
+                    binding.upgradeAddMoneyPrice.setText("Price: " + Integer.toString(addMoney * 20));
                 } else {
                     notEnoughMoney();
+                }
+            }
+        });
+
+        binding.buttonUpgradeOfflineMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Integer.parseInt(binding.moneyCount.getText().toString()) >= addMoney * 20) {
+                    binding.moneyCount.setText(
+                            Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) - (offlineMoney + 1) * 200)
+                    );
+                    levelUpgradeOfflineMoney = levelUpgradeOfflineMoney + 1;
+                    offlineMoney = offlineMoney + 1;
+                    binding.upgradeOfflineMoneyPrice.setText("Price: " + Integer.toString((offlineMoney + 1) * 200));
                 }
             }
         });
@@ -96,7 +115,60 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+        OfflineMoney offlineMoney = new OfflineMoney();
+        offlineMoney.start();
+
+//        binding.moneyCount.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                binding.moneyCount.setText(
+//                        Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney + 1)
+//                );
+//            }
+//        }, 10000);
+
+
+
+
     }
+
+    class OfflineMoney extends Thread {
+        @Override
+        public void run() {
+            while(true) {
+                binding.moneyCount.setText(
+                        Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney + 1)
+                );
+                try {
+                    sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+//    class OfflineMoney extends Thread {
+//        @Override
+//        public void run() {
+//            for (int i = 0; i < 10; i++) {
+//                binding.moneyCount.setText(
+//                        Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney + 1)
+//                );
+//                try {
+//                    sleep(10000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//
+//            }
+//        }
+//    }
+
+
 
     private void notEnoughMoney() {
         Toast.makeText(this, "Not enough money", Toast.LENGTH_SHORT).show();
@@ -106,8 +178,10 @@ public class MainActivity extends AppCompatActivity {
         mySP = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = mySP.edit();
 
-        editor.putInt(String.valueOf(SAVE_MONEY), money);
-        editor.putInt(String.valueOf(SAVE_LEVEL_UPGRADE), levelUpgrade);
+        editor.putInt(String.valueOf(SAVE_MONEY), Integer.parseInt(binding.moneyCount.getText().toString()));
+        editor.putInt(String.valueOf(SAVE_LEVEL_UPGRADE_ADD_MONEY), levelUpgradeAddMoney);
+        editor.putInt(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_MONEY), levelUpgradeOfflineMoney);
+        editor.putInt(String.valueOf(SAVE_OFFLINE_MONEY), offlineMoney);
         editor.putInt(String.valueOf(SAVE_ADD_MONEY), addMoney);
 
         editor.commit();
@@ -124,7 +198,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("money", Integer.parseInt(binding.moneyCount.getText().toString()));
-        outState.putInt("levelUpgrade", levelUpgrade);
+        outState.putInt("levelUpgradeAddMoney", levelUpgradeAddMoney);
+        outState.putInt("levelUpgradeOfflineMoney", levelUpgradeOfflineMoney);
+        outState.putInt("offlineMoney", offlineMoney);
         outState.putInt("addMoney", addMoney);
     }
 
