@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences mySP;
     final int SAVE_MONEY = 0;
     final int SAVE_LEVEL_UPGRADE_ADD_MONEY = 1;
-    final int SAVE_LEVEL_UPGRADE_OFFLINE_MONEY = 0;
-    final int SAVE_OFFLINE_MONEY = 0;
-    final int SAVE_ADD_MONEY = 1;
+    final int SAVE_LEVEL_UPGRADE_OFFLINE_MONEY = 2;
+    final int SAVE_OFFLINE_MONEY = 3;
+    final int SAVE_ADD_MONEY = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadPref() {
         mySP = getPreferences(MODE_PRIVATE);
         int saveInt = mySP.getInt(String.valueOf(SAVE_MONEY), 0);
-        binding.moneyCount.setText(Integer.toString(saveInt - 10)); //g
+        binding.moneyCount.setText(Integer.toString(saveInt)); //g
 
 
 
@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
         if (getPreferences(MODE_PRIVATE).getInt(String.valueOf(SAVE_MONEY), 0) != 0) {
             mySP = getPreferences(MODE_PRIVATE);
             int saveInt = mySP.getInt(String.valueOf(SAVE_MONEY), 0);
-            binding.moneyCount.setText(Integer.toString(saveInt - 5));//h
+            binding.moneyCount.setText(Integer.toString(saveInt));//h
         }
     }
 
