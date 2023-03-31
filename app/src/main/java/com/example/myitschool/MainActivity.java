@@ -1,10 +1,14 @@
 package com.example.myitschool;
 
+import static java.lang.Thread.sleep;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int addMoney = 1;
     private int offlineMoney = 0;
+    private float offlineTime = 10f;
 
     SharedPreferences mySP;
     final int SAVE_MONEY = 0;
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     final int SAVE_LEVEL_UPGRADE_OFFLINE_MONEY = 2;
     final int SAVE_OFFLINE_MONEY = 3;
     final int SAVE_ADD_MONEY = 4;
+    final int SAVE_LEVEL_UPGRADE_OFFLINE_TIME = 5;
+
+    private Handler offlineHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +57,12 @@ public class MainActivity extends AppCompatActivity {
             levelUpgradeOfflineMoney = savedInstanceState.getInt("levelUpgradeOfflineMoney");
             offlineMoney = savedInstanceState.getInt("offlineMoney");
             addMoney = savedInstanceState.getInt("addMoney");
+            offlineTime = savedInstanceState.getFloat("offlineTime");
         }
         binding.upgradeAddMoneyPrice.setText("Price: " + Integer.toString(addMoney * 20));
         binding.upgradeOfflineMoneyPrice.setText("Price: " + Integer.toString((offlineMoney + 1) * 200));
         binding.addMoneyCount.setText("Money per\nclick: " + Integer.toString(addMoney));
-        binding.addOfflineMoneyCount.setText("Money per\noffline: " + Integer.toString(offlineMoney));
+        binding.addOfflineMoneyCount.setText("Money per\n" + offlineTime + ": " + Integer.toString(offlineMoney));
 
         //Checking all buttons for click
         binding.buttonMoney.setOnClickListener(new View.OnClickListener() {
@@ -94,11 +103,45 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.buttonUpgradeOfflineTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickBtnUpgradeOfflineTime();
+            }
+        });
 
+        offlineHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                binding.moneyCount.setText(
+                        Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney)
+                );
+                offlineHandler.sendEmptyMessageDelayed(0, (long) (offlineTime * 1000));
+            }
+        };
+
+        offlineHandler.sendEmptyMessage(0);
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                while (true) {
+//                    offlineHandler.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//
+//                            binding.moneyCount.setText(
+//                                    Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney + 1)
+//                            );
+//                        }
+//                    });
+//                }
+//            }
+//        });
 
 //        OfflineMoney offlineMoney = new OfflineMoney();
 //        offlineMoney.start();
-
+//
 //        binding.moneyCount.postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -110,21 +153,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    class OfflineMoney extends Thread {
-        @Override
-        public void run() {
-            while(true) {
-                binding.moneyCount.setText(
-                        Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney + 1)
-                );
-                try {
-                    sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
+//    class OfflineMoney extends Thread {
+//        @Override
+//        public void run() {
+//            while(true) {
+//                binding.moneyCount.setText(
+//                        Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) + offlineMoney + 1)
+//                );
+//                try {
+//                    sleep(10000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+//    }
 
 
 //    class OfflineMoney extends Thread {
@@ -160,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_MONEY), levelUpgradeOfflineMoney);
         editor.putInt(String.valueOf(SAVE_OFFLINE_MONEY), offlineMoney);
         editor.putInt(String.valueOf(SAVE_ADD_MONEY), addMoney);
+        editor.putFloat(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_TIME), offlineTime);
 
         editor.commit();
         Toast.makeText(this, "Progress saved", Toast.LENGTH_SHORT).show();
@@ -167,6 +211,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadPref() {
         mySP = getPreferences(MODE_PRIVATE);
+        float saveFloat = mySP.getFloat(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_TIME), 10f);
+        offlineTime = saveFloat;
         int saveInt = mySP.getInt(String.valueOf(SAVE_MONEY), 0);
         binding.moneyCount.setText(Integer.toString(saveInt)); //g
 
@@ -188,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         binding.upgradeAddMoneyPrice.setText("Price: " + Integer.toString(addMoney * 20));
         binding.upgradeOfflineMoneyPrice.setText("Price: " + Integer.toString((offlineMoney + 1) * 200));
         binding.addMoneyCount.setText("Money per\nclick: " + Integer.toString(addMoney));
-        binding.addOfflineMoneyCount.setText("Money per\noffline: " + Integer.toString(offlineMoney));
+        binding.addOfflineMoneyCount.setText("Money per\n" + offlineTime + ": " + Integer.toString(offlineMoney));
 
 
 
@@ -202,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("levelUpgradeOfflineMoney", levelUpgradeOfflineMoney);
         outState.putInt("offlineMoney", offlineMoney);
         outState.putInt("addMoney", addMoney);
+        outState.putFloat("offlineTime", offlineTime);
     }
 
     private void loadGetAllPref() {
@@ -234,6 +281,12 @@ public class MainActivity extends AppCompatActivity {
             int saveInt = mySP.getInt(String.valueOf(SAVE_MONEY), 0);
             binding.moneyCount.setText(Integer.toString(saveInt));//h
         }
+
+        if (getPreferences(MODE_PRIVATE).getFloat(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_TIME), 10f) != 10f) {
+            mySP = getPreferences(MODE_PRIVATE);
+            float saveFloat = mySP.getFloat(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_TIME), 10f);
+            offlineTime = saveFloat;
+        }
     }
 
     private void onClickBtnUpgradeOfflineMoney() {
@@ -243,8 +296,21 @@ public class MainActivity extends AppCompatActivity {
             );
             levelUpgradeOfflineMoney = levelUpgradeOfflineMoney + 1;
             offlineMoney = offlineMoney + 1;
-            binding.addOfflineMoneyCount.setText("Money per\noffline: " + Integer.toString(offlineMoney));
+            binding.addOfflineMoneyCount.setText("Money per\n" + offlineTime + ": " + Integer.toString(offlineMoney));
             binding.upgradeOfflineMoneyPrice.setText("Price: " + Integer.toString((offlineMoney + 1) * 200));
+        } else {
+            notEnoughMoney();
+        }
+    }
+
+    private void onClickBtnUpgradeOfflineTime() {
+        if (Integer.parseInt(binding.moneyCount.getText().toString()) >= (int) (101 - offlineTime * 10) * 1000) {
+            binding.moneyCount.setText(
+                    Integer.toString(Integer.parseInt(binding.moneyCount.getText().toString()) - (int) (101 - offlineTime * 10) * 1000)
+            );
+            offlineTime = offlineTime - 0.5f;
+            binding.addOfflineMoneyCount.setText("Money per\n" + offlineTime + ": " + Integer.toString(offlineMoney));
+            binding.upgradeOfflineTimePrice.setText("Price: " + Integer.toString((int) (101 - offlineTime * 10) * 1000));
         } else {
             notEnoughMoney();
         }

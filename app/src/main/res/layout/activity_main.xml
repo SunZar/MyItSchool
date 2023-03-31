@@ -50,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="200dp"
+        android:layout_height="300dp"
         android:orientation="vertical"
         android:gravity="bottom">
 
@@ -96,6 +96,57 @@
             <Button
                 android:id="@+id/button_upgrade_offline_money"
                 android:text="Upgrade offline"
+                android:textSize="12dp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+
+<!--            <TextView-->
+<!--                android:id="@+id/upgrade_add_money_price"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:gravity=""-->
+<!--                android:text="Price: 20"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Headline"-->
+<!--                android:textSize="20dp" />-->
+
+            <TextView
+                android:id="@+id/upgrade_offline_time_price"
+                android:text="Price: 2000"
+                android:textSize="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="right">
+
+<!--            <Button-->
+<!--                android:id="@+id/button_upgrade_add_money"-->
+<!--                android:text="Upgrade money"-->
+<!--                android:textSize="12dp"-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"/>-->
+
+            <Button
+                android:id="@+id/button_upgrade_offline_time"
+                android:text="Upgrade offline time"
                 android:textSize="12dp"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
