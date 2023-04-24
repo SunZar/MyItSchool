@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        StocksFragment stocksFragment = new StocksFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.rootContainer, stocksFragment)
+                .commit();
 
 
         loadGetAllPref();
@@ -108,6 +113,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 onClickBtnUpgradeOfflineTime();
             }
+        });
+
+        binding.stocks.setOnClickListener(view -> {
+
         });
 
         offlineHandler = new Handler() {
