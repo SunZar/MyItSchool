@@ -46,12 +46,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        StocksFragment stocksFragment = new StocksFragment();
-        
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.rootContainer, stocksFragment)
-                .commit();
+//        StocksFragment stocksFragment = new StocksFragment();
+//
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .replace(R.id.rootContainer, stocksFragment)
+//                .commit();
+
+        binding.stocks.setOnClickListener(view -> {
+            goSearchStocks();
+        });
 
         repository.setOnLoadingStocksState(state -> {
             if (state instanceof OnLoadingStocksState.State.Success) {
@@ -66,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void goSearchStocks() {
-        //String searchRequest = binding.search.getText().toString();
-        //repository.search(searchRequest);
+        String searchRequest = binding.currency.getText().toString();
+        repository.search(searchRequest);
     }
 
     @Override

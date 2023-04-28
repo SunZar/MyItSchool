@@ -6,8 +6,10 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface StocksApi {
-    @GET("gh/fawazahmed0/currency-api@1/latest/currencies/btc/usd.json")
-    Call<StocksSearchResponse> getSearchResult();
+    @GET("gh/fawazahmed0/currency-api@1/latest/currencies/{name}/usd.json")
+    Call<StocksSearchResponse> getSearchResult(
+            @Path("name") String request
+    );
 //    Call<StocksSearchResponse> getSearchResult(
 //            @Path("") String apikey
 //            )

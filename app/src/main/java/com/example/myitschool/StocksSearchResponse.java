@@ -1,20 +1,23 @@
 package com.example.myitschool;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class StocksSearchResponse {
-    public List<StocksShortData> getSearch() {
-        return search;
-    }
+    @SerializedName("usd")
+    private final List<StocksShortData> usd;
 
-    private final List<StocksShortData> search;
+    public List<StocksShortData> getSearch() {
+        return usd;
+    }
 
     public StocksSearchResponse() {
         this(new ArrayList<>());
     }
 
     public StocksSearchResponse(List<StocksShortData> search) {
-        this.search = search;
+        this.usd = search;
     }
 }

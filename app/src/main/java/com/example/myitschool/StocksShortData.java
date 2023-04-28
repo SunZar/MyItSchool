@@ -1,6 +1,9 @@
 package com.example.myitschool;
 
+import com.google.gson.annotations.SerializedName;
+
 public class StocksShortData {
+    @SerializedName("usd")
     private final String usd;
 
     public StocksShortData() {
