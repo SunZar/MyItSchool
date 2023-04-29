@@ -1,4 +1,4 @@
-package com.example.myitschool;
+package com.example.myitschool.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

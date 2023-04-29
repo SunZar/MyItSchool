@@ -1,18 +1,20 @@
-package com.example.myitschool;
+package com.example.myitschool.ui;
 
 import static java.lang.Thread.sleep;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.view.View;
-import android.widget.Toast;
+import android.util.Log;
 
+import com.example.myitschool.data.StocksRepository;
+import com.example.myitschool.data.StocksSearchResponse;
 import com.example.myitschool.databinding.ActivityMainBinding;
+import com.example.myitschool.utils.Resource;
+
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,26 +59,35 @@ public class MainActivity extends AppCompatActivity {
             goSearchStocks();
         });
 
-        repository.setOnLoadingStocksState(state -> {
-            if (state instanceof OnLoadingStocksState.State.Success) {
-                onUpdateData((OnLoadingStocksState.State.Success) state);
+        repository.stockSearchLiveData.observe(this, stocksSearchResponseResource -> {
+            Log.d("LOG", "RESPONSE SUCCESS: " + stocksSearchResponseResource.toString());
+            if (stocksSearchResponseResource instanceof Resource.Success) {
+                onUpdateData((Resource.Success<StocksSearchResponse>)stocksSearchResponseResource);
+            } else if (stocksSearchResponseResource instanceof Resource.Error) {
+                showError();
+            } else if (stocksSearchResponseResource instanceof Resource.Loading) {
+                showLoading(); //Не забудь скрыть загрузку в других состояниях
             }
         });
     }
 
-    private void onUpdateData(OnLoadingStocksState.State.Success state) {
-        //adapter.setItems(state.getStocks());
+    private void showLoading() {
+
+    }
+
+    private void showError() {
+
+    }
+
+    private void onUpdateData(Resource.Success<StocksSearchResponse> state) {
+        state.getValue().getCurrencies().forEach((currency, aDouble) -> {
+            Log.d("LOG", currency + ": " + aDouble);
+        });
     }
 
 
     private void goSearchStocks() {
-        String searchRequest = binding.currency.getText().toString();
+        String searchRequest = binding.currency.getText().toString().trim();
         repository.search(searchRequest);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        repository.removeOnLoadingStocksState();
     }
 }

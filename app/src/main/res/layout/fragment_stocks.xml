@@ -5,10 +5,11 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.jjoe64.graphview.GraphView
+    <!--<com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:id="@+id/graph" />
+        -->
 
     <TextView
         android:id="@+id/text"

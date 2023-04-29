@@ -1,4 +1,4 @@
-package com.example.myitschool;
+package com.example.myitschool.data;
 
 import com.google.gson.annotations.SerializedName;
 

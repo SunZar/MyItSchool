@@ -1,4 +1,4 @@
-package com.example.myitschool;
+package com.example.myitschool.data;
 
 import android.content.SharedPreferences;
 import android.os.Handler;

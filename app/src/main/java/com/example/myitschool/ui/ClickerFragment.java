@@ -1,4 +1,4 @@
-package com.example.myitschool;
+package com.example.myitschool.ui;
 
 import static android.content.Context.MODE_PRIVATE;
 
