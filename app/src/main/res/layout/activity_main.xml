@@ -15,10 +15,11 @@
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!--<com.jjoe64.graphview.GraphView
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:id="@+id/graph" />-->
+        <com.androidplot.xy.XYPlot
+            style="@style/APDefacto.Dark"
+            android:id="@+id/plot"
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"/>
 
         <TextView
             android:id="@+id/text"
