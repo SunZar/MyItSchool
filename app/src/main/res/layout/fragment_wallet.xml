@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/text_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Общий баланс:"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:id="@+id/total_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="132421.87 RUB"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintTop_toBottomOf="@id/text_total"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/total_balance"
+        app:spanCount="2"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_wallet_stock"
+        android:layout_marginTop="90dp"
+        android:layout_marginBottom="60dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

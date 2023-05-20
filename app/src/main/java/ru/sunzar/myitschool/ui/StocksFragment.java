@@ -1,4 +1,4 @@
-package com.example.myitschool.ui;
+package ru.sunzar.myitschool.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import com.example.myitschool.databinding.FragmentStocksBinding;
 
 public class StocksFragment extends Fragment {
     private FragmentStocksBinding binding;
+
     @Nullable
     @Override
     public View onCreateView(

@@ -1,15 +1,10 @@
-package com.example.myitschool.data;
+package ru.sunzar.myitschool.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.myitschool.utils.Resource;
-import com.example.myitschool.utils.RetrofitCallback;
-import com.example.myitschool.utils.Utils;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -17,8 +12,11 @@ import java.util.concurrent.TimeUnit;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import ru.sunzar.myitschool.utils.Resource;
+import ru.sunzar.myitschool.utils.RetrofitCallback;
+import ru.sunzar.myitschool.utils.Utils;
 
-public class StocksRepository {
+public class StocksGraphRepository {
     private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(Utils.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -33,7 +31,7 @@ public class StocksRepository {
     public void search(long period, final String currencies) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-        long day = System.currentTimeMillis() - TimeUnit.DAYS.toMillis(period);
+        long day = System.currentTimeMillis() - 30_600_000 - TimeUnit.DAYS.toMillis(period);
 
         final Map<String, Resource<StocksSearchResponse>> results = new TreeMap<>();
 
@@ -54,15 +52,22 @@ public class StocksRepository {
     private void checkData(Map<String, Resource<StocksSearchResponse>> results, long period, String currencies) {
         if (results.size() < period) return;
         ArrayList<String> labels = new ArrayList<>();
-        ArrayList<Double> values = new ArrayList<>();
+        ArrayList<Float> values = new ArrayList<>();
         results.forEach((date, result) -> {
             if (result instanceof Resource.Success) {
                 labels.add(date);
+                double temp = 1 / ((Resource.Success<StocksSearchResponse>) result).getValue()
+                        .getCurrencies()
+                        .get(currencies);
                 values.add(
-                        ((Resource.Success<StocksSearchResponse>) result).getValue()
-                                .getCurrencies()
-                                .get(currencies)
+                        (float) (Math.ceil((temp + (Math.random() * temp / 100)) * 100) / 100)
                 );
+//                values.add(Math.ceil(
+//                        ((Resource.Success<StocksSearchResponse>) result)
+//                                .getValue()
+//                                .getCurrencies()
+//                                .get(currencies)
+//                ));
             } else if (result instanceof Resource.Loading) {
                 mutableStockGraphDataLiveData.setValue(new Resource.Loading<>());
             } else if (result instanceof Resource.Error) {

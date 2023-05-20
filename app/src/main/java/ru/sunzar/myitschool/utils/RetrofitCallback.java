@@ -1,4 +1,4 @@
-package com.example.myitschool.utils;
+package ru.sunzar.myitschool.utils;
 
 import android.util.Log;
 

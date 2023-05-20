@@ -1,23 +1,23 @@
-package com.example.myitschool.data;
+package ru.sunzar.myitschool.data;
 
 import java.util.List;
 
 public class StockGraphData {
     private final List<String> labels;
-    private final List<Double> values;
-    private final double currentPrice;
+    private final List<Float> values;
+    private final float currentPrice;
 
-    public StockGraphData(List<String> labels, List<Double> values, double currentPrice) {
+    public StockGraphData(List<String> labels, List<Float> values, float currentPrice) {
         this.labels = labels;
         this.values = values;
         this.currentPrice = currentPrice;
     }
 
-    public double getCurrentPrice() {
+    public float getCurrentPrice() {
         return currentPrice;
     }
 
-    public List<Double> getValues() {
+    public List<Float> getValues() {
         return values;
     }
 

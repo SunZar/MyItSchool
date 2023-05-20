@@ -7,4 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="buy">#2EBD85</color>
+    <color name="sell">#F6465D</color>
+    <color name="shadow">#F5F5F5</color>
+    <color name="textShadow">#B6BBC0</color>
+    <color name="textDarkShadow">#727577</color>
+    <color name="textNotChoose">#858E9B</color>
 </resources>

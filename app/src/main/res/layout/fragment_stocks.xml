@@ -1,21 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="ru.sunzar.myitschool.ui.MainActivity">
 
-    <!--<com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:id="@+id/graph" />
-        -->
+    <LinearLayout
+        android:id="@+id/layoutTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/text"
+        <TextView
+            android:id="@+id/stocksText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:text="Сделка"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutTitle"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/currency_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="Количество валюты"
+            android:layout_marginEnd="15dp"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/rub_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="Рубли"
+            android:layout_marginHorizontal="10dp"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/layout">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:text="Валюта/RUB" />
+
+        <com.androidplot.xy.XYPlot
+            style="@style/APDefacto.Custom"
+            android:id="@+id/plot"
+            android:layout_width="fill_parent"
+            android:layout_height="320dp"
+            android:layout_marginHorizontal="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/buy"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:text="Купить ID валюты"
+                android:textSize="13.5dp"
+                android:backgroundTint="@color/buy" />
+
+            <Button
+                android:id="@+id/sell"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="5dp"
+                android:text="Продать ID валюты"
+                android:textSize="13.5dp"
+                android:backgroundTint="@color/shadow"
+                android:textColor="@color/textNotChoose" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:text="Стоимость"
+            android:gravity="center" />
+
+        <EditText
+            android:id="@+id/currency_count_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Количество (ID валюты)"
+            android:inputType="number"
+            android:layout_marginHorizontal="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <Button
+                android:id="@+id/percentagesOfBalance25"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="25%"
+                android:textSize="12dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/shadow"
+                android:textColor="@color/textShadow" />
+
+            <Button
+                android:id="@+id/percentagesOfBalance50"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="50%"
+                android:textSize="12dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/shadow"
+                android:textColor="@color/textShadow" />
+
+            <Button
+                android:id="@+id/percentagesOfBalance75"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="75%"
+                android:textSize="12dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/shadow"
+                android:textColor="@color/textShadow" />
+
+            <Button
+                android:id="@+id/percentagesOfBalance100"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:text="100%"
+                android:textSize="12dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/shadow"
+                android:textColor="@color/textShadow" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/rub_count_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Количество (RUB)"
+            android:inputType="number"
+            android:layout_marginHorizontal="20dp" />
+
+        <Button
+            android:id="@+id/buttonAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Продать/Купить ID валюты и цвет"
+            android:backgroundTint="@color/buy"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="5dp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

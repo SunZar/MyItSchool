@@ -1,66 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/menu_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/menu_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.androidplot.xy.XYPlot
-            style="@style/APDefacto.Dark"
-            android:id="@+id/plot"
-            android:layout_width="fill_parent"
-            android:layout_height="400dp"/>
-
-        <TextView
-            android:id="@+id/text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
-
-        <EditText
-            android:id="@+id/currency"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:hint="Currency"
-            android:inputType="text"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:layout_marginTop="5dp"
+        android:weightSum="4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/clicker"
-            android:layout_width="150dp"
+            android:id="@+id/mining"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:text="Clicker"
-            android:layout_gravity="center"/>
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/shadow"
+            android:text="Майнинг"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/textDarkShadow"
+            android:textSize="12dp" />
 
         <Button
             android:id="@+id/stocks"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="0dp"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-            android:text="Stocks"
-            android:layout_gravity="center"/>
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/shadow"
+            android:text="Биржа"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/textDarkShadow"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/shop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/shadow"
+            android:text="Магазин"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/textDarkShadow"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/shadow"
+            android:text="Кошелёк"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/textDarkShadow"
+            android:textSize="12dp" />
 
     </LinearLayout>
 

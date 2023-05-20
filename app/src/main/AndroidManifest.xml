@@ -11,21 +11,24 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyItSchool"
+        android:theme="@style/Theme.MyItSchool.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name="ru.sunzar.myitschool.ui.MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name="ru.sunzar.myitschool.StocksActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

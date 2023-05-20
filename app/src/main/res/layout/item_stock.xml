@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    app:cardCornerRadius="20dp"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:text="Название валюты"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/text_price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="Цена:"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@id/price"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:text="Цена валюты"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:padding="10dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:gravity="center">-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/name"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:textAppearance="@style/TextAppearance.AppCompat.Headline"-->
+    <!--            android:text="Название валюты"-->
+    <!--            android:gravity="center"/>-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
+    <!--            android:text="Цена:"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:gravity="center"/>-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/price"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:textAppearance="@style/TextAppearance.AppCompat.Title"-->
+    <!--            android:text="Цена валюты"-->
+    <!--            android:gravity="center"/>-->
+
+    <!--    </LinearLayout>-->
+
+</androidx.cardview.widget.CardView>

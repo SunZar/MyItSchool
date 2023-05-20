@@ -1,4 +1,4 @@
-package com.example.myitschool.utils;
+package ru.sunzar.myitschool.utils;
 
 public interface Resource<T> {
     class Success<T> implements Resource<T> {
