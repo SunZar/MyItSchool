@@ -26,7 +26,6 @@ public class StocksData {
         KCS("Kucoin", "kcs"),
         TRX("Tron", "trx");
 
-
         private final String apiName;
         private final String displayName;
 
