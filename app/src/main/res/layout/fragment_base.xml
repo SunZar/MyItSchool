@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
+        android:background="@color/toolbar"
         android:paddingHorizontal="8dp"
         android:paddingVertical="4dp">
 
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/white"
+            android:textColor="@color/toolbarText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,10 +29,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
-            android:drawableTint="@color/white"
+            android:drawableTint="@color/toolbarText"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/white"
+            android:textColor="@color/toolbarText"
             app:drawableStartCompat="@drawable/currency_rub"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,14 +44,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="8dp"
-            android:drawableTint="@color/white"
+            android:drawableTint="@color/toolbarText"
             android:gravity="center_vertical"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textColor="@color/white"
-            app:drawableStartCompat="@drawable/currency_btc"
+            android:textColor="@color/toolbarText"
+            app:drawableStartCompat="@drawable/ethereum"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rub"
-            tools:drawableStart="@drawable/currency_btc"
+            tools:drawableStart="@drawable/ethereum"
             tools:text="12312" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,9 +7,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_logo2"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_logo2_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyItSchool.NoActionBar"
         tools:targetApi="31">
@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="ru.sunzar.myitschool.StocksActivity"
+            android:name="ru.sunzar.myitschool.ui.StocksActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

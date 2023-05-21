@@ -10,10 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myitschool.R;
 import com.example.myitschool.databinding.ActivityMainBinding;
 
-import ru.sunzar.myitschool.ClickerActivity;
-import ru.sunzar.myitschool.MenuStocksFragment;
-import ru.sunzar.myitschool.ShopFragment;
-import ru.sunzar.myitschool.WalletFragment;
 import ru.sunzar.myitschool.data.StocksData;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,25 +21,40 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        pasteMenuStocksFragment();
+        onClickButtonMining();
 
-        binding.mining.setOnClickListener(view -> {
-            onClickButtonMining();
-        });
-
-        binding.stocks.setOnClickListener(view -> {
-            onClickButtonStocks();
-        });
-
-        binding.shop.setOnClickListener(view -> {
-            onClickButtonShop();
-        });
-
-        binding.wallet.setOnClickListener(view -> {
-            onClickButtonWallet();
-        });
+//        binding.mining.setOnClickListener(view -> {
+//            onClickButtonMining();
+//        });
+//
+//        binding.stocks.setOnClickListener(view -> {
+//            onClickButtonStocks();
+//        });
+//
+//        binding.shop.setOnClickListener(view -> {
+//            onClickButtonShop();
+//        });
+//
+//        binding.wallet.setOnClickListener(view -> {
+//            onClickButtonWallet();
+//        });
         updateCurrenciesFromShared();
         saveCurrenciesToShared();
+
+        binding.menuNavigation.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.mining:
+                    onClickButtonMining();
+                    break;
+                case R.id.stocks:
+                    onClickButtonStocks();
+                    break;
+                case R.id.wallet:
+                    onClickButtonWallet();
+                    break;
+            }
+            return true;
+        });
     }
 
     private void updateCurrenciesFromShared() {

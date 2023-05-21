@@ -11,15 +11,20 @@ public class StocksData {
     private final static Map<Currency, MutableLiveData<Float>> currencies = new HashMap<>();
 
     public enum Currency implements Serializable {
-        RUB("rub", "rub"),
-        BTC("Bitcoin", "btc"),
+        RUB("Russian rubles", "rub"),
+        //BTC("Bitcoin", "btc"),
         EUR("Euro", "eur"),
         MATIC("Matic", "matic"),
         DOGE("Doge coin", "doge"),
         CNY("Chinese yuan", "cny"),
         ETH("Ethereum", "eth"),
         INCH("1inch", "1inch"),
-        LTC("Litecoin", "ltc");
+        LTC("Litecoin", "ltc"),
+        BNB("Binance coin", "bnb"),
+        DOT("Dotcoin", "dot"),
+        FLOW("Flow", "flow"),
+        KCS("Kucoin", "kcs"),
+        TRX("Tron", "trx");
 
 
         private final String apiName;

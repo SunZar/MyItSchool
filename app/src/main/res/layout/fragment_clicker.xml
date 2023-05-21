@@ -6,64 +6,87 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout1">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <TextView
-            android:id="@+id/btc_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:text="BTC"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+<!--        <TextView-->
+<!--            android:id="@+id/btc_count"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:layout_marginBottom="10dp"-->
+<!--            android:text="BTC"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
 
-        <TextView
-            android:id="@+id/rub_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:orientation="horizontal"
-            android:text="Рубли"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+<!--        <TextView-->
+<!--            android:id="@+id/rub_count"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="10dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:text="Рубли"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
-    <Button
+<!--    <ImageButton-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:background="@drawable/graphics_card"/>-->
+
+    <ImageButton
         android:id="@+id/button_click"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="100dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="80dp"
         android:text="Кликай!"
         android:textSize="30dp"
+        android:background="@drawable/graphics_card1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/percentage_durability"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="350dp"
         android:gravity="center"
         android:text="Прочность\nвидеокарты"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_click" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="320dp"
+        android:gravity="center"
+        android:text="(Кликни)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_upgrades"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="Дополнения:"
+        android:layout_margin="16dp"
+        android:drawableLeft="@drawable/store"
+        android:drawablePadding="4dp"
+        android:text="Магазин:"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintBottom_toTopOf="@id/scroll"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,12 +116,12 @@
                 android:background="@color/design_default_color_primary"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:cardCornerRadius="4dp">
+                app:cardCornerRadius="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="8dp"
+                    android:padding="16dp"
                     android:gravity="start"
                     android:orientation="vertical">
 
@@ -109,7 +132,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Стоимость за клик"
+                        android:text="Количество за клик"
                         android:textColor="@color/ap_black"
                         android:textSize="18dp" />
 
@@ -119,10 +142,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:drawableStart="@drawable/currency_btc"
-                        android:drawablePadding="8dp"
+                        android:drawableEnd="@drawable/ethereum"
+                        android:drawablePadding="0dp"
                         android:gravity="center_vertical"
-                        android:text="100"
+                        android:text="Цена: 100"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
 
@@ -132,10 +155,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:drawablePadding="8dp"
+                        android:drawablePadding="0dp"
                         android:drawableStart="@drawable/ic_add"
-                        android:drawableTint="#0a0"
-                        android:text="1"
+                        android:drawableEnd="@drawable/ethereum"
+                        android:text=" 1"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
 
@@ -151,12 +174,13 @@
                 android:background="@color/design_default_color_primary"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:cardCornerRadius="4dp">
+                app:cardCornerRadius="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="start"
+                    android:padding="16dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -167,7 +191,8 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Увеличить BTC\nза ВРЕМЯ"
+
+                        android:text="Количество за 10 сек"
                         android:textColor="@color/ap_black"
                         android:textSize="18dp" />
 
@@ -177,6 +202,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:drawablePadding="0dp"
+                        android:drawableEnd="@drawable/ethereum"
                         android:text="Цена: 100"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
@@ -187,7 +214,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:text="BTC за ВРЕМЯ сек: 1"
+                        android:drawablePadding="0dp"
+                        android:drawableStart="@drawable/ic_add"
+                        android:drawableEnd="@drawable/ethereum"
+                        android:text=" 1"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
 
@@ -203,12 +233,13 @@
                 android:background="@color/design_default_color_primary"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:cardCornerRadius="4dp">
+                app:cardCornerRadius="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="start"
+                    android:padding="16dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -218,7 +249,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Уменьшить время\nприбавления BTC"
+                        android:text="Время получения"
                         android:textColor="@color/ap_black"
                         android:textSize="18dp" />
 
@@ -228,6 +259,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:drawablePadding="0dp"
+                        android:drawableEnd="@drawable/ethereum"
                         android:text="Цена: 100"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
@@ -238,7 +271,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:text="Время: 1"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/ic_baseline_access_time_24"
+                        android:drawableTint="#0a0"
+                        android:text="1 сек"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
 
@@ -254,12 +290,13 @@
                 android:background="@color/design_default_color_primary"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:cardCornerRadius="4dp">
+                app:cardCornerRadius="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="start"
+                    android:padding="16dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -269,7 +306,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
-                        android:text="Купить\nвидеокарту"
+                        android:text="Купить видеокарту"
                         android:textColor="@color/ap_black"
                         android:textSize="18dp" />
 
@@ -279,6 +316,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
+                        android:drawablePadding="0dp"
+                        android:drawableEnd="@drawable/ethereum"
                         android:text="Цена: 100"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
@@ -289,7 +328,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
-                        android:text="Количество: 1"
+                        android:drawablePadding="0dp"
+                        android:drawableStart="@drawable/ic_add"
+                        android:drawableEnd="@drawable/expansion_card"
+                        android:text=" 1"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title"
                         android:textColor="@color/ap_black" />
 
@@ -301,26 +343,26 @@
 
     </HorizontalScrollView>
 
-    <LinearLayout
-        android:id="@+id/layout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+<!--    <LinearLayout-->
+<!--        android:id="@+id/layout1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
 
-        <TextView
-            android:id="@+id/miningText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal"
-            android:text="Майнинг"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+<!--        <TextView-->
+<!--            android:id="@+id/miningText"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:text="Майнинг"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />-->
 
-    </LinearLayout>
+<!--    </LinearLayout>-->
 
     <!--    <LinearLayout-->
     <!--        android:id="@+id/layout2"-->
