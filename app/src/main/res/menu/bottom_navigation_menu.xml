@@ -9,6 +9,10 @@
         android:title="Биржа"
         android:icon="@drawable/ic_baseline_currency_exchange_24"/>
     <item
+        android:id="@+id/shop"
+        android:title="Магазин"
+        android:icon="@drawable/store"/>
+    <item
         android:id="@+id/wallet"
         android:title="Кошелёк"
         android:icon="@drawable/wallet"/>

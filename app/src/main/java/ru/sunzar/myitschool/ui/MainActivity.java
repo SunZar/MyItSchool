@@ -23,21 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
         onClickButtonMining();
 
-//        binding.mining.setOnClickListener(view -> {
-//            onClickButtonMining();
-//        });
-//
-//        binding.stocks.setOnClickListener(view -> {
-//            onClickButtonStocks();
-//        });
-//
-//        binding.shop.setOnClickListener(view -> {
-//            onClickButtonShop();
-//        });
-//
-//        binding.wallet.setOnClickListener(view -> {
-//            onClickButtonWallet();
-//        });
         updateCurrenciesFromShared();
         saveCurrenciesToShared();
 
@@ -48,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.stocks:
                     onClickButtonStocks();
+                    break;
+                case R.id.shop:
+                    onClickButtonShop();
                     break;
                 case R.id.wallet:
                     onClickButtonWallet();
@@ -74,15 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickButtonMining() {
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.textShadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-        ClickerActivity fragment = new ClickerActivity();
+        ClickerFragment fragment = new ClickerFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -90,14 +70,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickButtonStocks() {
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.textShadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
         MenuStocksFragment fragment = new MenuStocksFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -106,14 +78,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickButtonShop() {
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.textShadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
         ShopFragment fragment = new ShopFragment();
         getSupportFragmentManager()
                 .beginTransaction()
@@ -122,14 +86,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickButtonWallet() {
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
-//        binding.mining.setBackgroundTintList(getResources().getColorStateList(R.color.textShadow));
-//        binding.mining.setTextColor(getResources().getColorStateList(R.color.textDarkShadow));
         WalletFragment fragment = new WalletFragment();
         getSupportFragmentManager()
                 .beginTransaction()

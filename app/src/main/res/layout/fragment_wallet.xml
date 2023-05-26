@@ -11,24 +11,87 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/total_balance"
+        app:layout_constraintTop_toBottomOf="@id/layout_balance"
         app:layout_constraintBottom_toBottomOf="parent"
         app:spanCount="2"
         tools:itemCount="10"
         tools:listitem="@layout/item_wallet_stock"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="5dp" />
 
     <TextView
-        android:id="@+id/text_total"
+        android:id="@+id/text_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Общий баланс:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:text="Портфель"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textSize="26dp"
+        app:layout_constraintTop_toBottomOf="@id/total_balance"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_balance"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="0dp">
+
+        <TextView
+            android:id="@+id/text_hide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Скрыть нулевые балансы"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/hide_null_balances"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/eye"
+            android:backgroundTint="@color/toolbar"
+            app:layout_constraintStart_toEndOf="@id/text_hide"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="8dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp">
+
+        <TextView
+            android:id="@+id/text_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Общий баланс (RUB)"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageButton
+            android:id="@+id/hide_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/eye"
+            android:backgroundTint="@color/toolbar"
+            app:layout_constraintStart_toEndOf="@id/text_total"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginHorizontal="8dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/total_balance"
@@ -36,7 +99,7 @@
         android:layout_height="wrap_content"
         android:text="0.0 RUB"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintTop_toBottomOf="@id/text_total"
+        app:layout_constraintTop_toBottomOf="@id/layout_total"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="5dp" />

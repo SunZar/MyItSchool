@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -57,6 +58,7 @@ public class StocksActivity extends AppCompatActivity {
     private boolean onClickPercentages50 = false;
     private boolean onClickPercentages75 = false;
     private boolean onClickPercentages100 = false;
+    private boolean chartIsHide = false;
 
     public static Intent newIntent(Context context, StocksData.Currency currency) {
         Intent intent = new Intent(context, StocksActivity.class);
@@ -90,6 +92,11 @@ public class StocksActivity extends AppCompatActivity {
 
         loadStocksData();
 
+        if (chartIsHide == true) {
+            binding.plot.setVisibility(View.GONE);
+            binding.hideChart.setBackgroundTintList(getResources().getColorStateList(R.color.hide));
+        }
+
         binding.title.setText("Сделка");
         binding.rubCount.setText("");
 
@@ -103,6 +110,10 @@ public class StocksActivity extends AppCompatActivity {
 
         binding.buttonAction.setOnClickListener(view -> {
             onClickButtonAction();
+        });
+
+        binding.hideChart.setOnClickListener(view -> {
+            onClickHideChart();
         });
 
         binding.currencyCountAction.addTextChangedListener(new TextWatcher() {
@@ -186,6 +197,19 @@ public class StocksActivity extends AppCompatActivity {
         binding.percentagesOfBalance100.setOnClickListener(view -> {
             onClickPercentagesOfBalance100();
         });
+    }
+
+    private void onClickHideChart() {
+        if (chartIsHide == false) {
+            chartIsHide = true;
+            binding.plot.setVisibility(View.GONE);
+            binding.hideChart.setBackgroundTintList(getResources().getColorStateList(R.color.hide));
+        } else {
+            chartIsHide = false;
+            binding.plot.setVisibility(View.VISIBLE);
+            binding.hideChart.setBackgroundTintList(getResources().getColorStateList(R.color.toolbar));
+        }
+        getSharedPreferences("graph_data", Context.MODE_PRIVATE).edit().putBoolean("chartIsHide", chartIsHide).apply();
     }
 
     private void resetPercentagesOfBalance() {
@@ -378,6 +402,18 @@ public class StocksActivity extends AppCompatActivity {
 
     private void onClickButtonBuy() {
         String currencyName = currency.getApiName().toUpperCase();
+        String currencyCountString = binding.currencyCountAction.getText().toString();
+        if (!(buyMode == true && currencyCountString.trim().length() != 0 && currencyCountString != "")) {
+            binding.percentagesOfBalance25.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance50.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance75.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance100.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance25.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.percentagesOfBalance50.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.percentagesOfBalance75.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.percentagesOfBalance100.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.currencyCountAction.setText("");
+        }
         buyMode = true;
         resetPercentagesOfBalanceBooleans();
         if (buyMode != true) {
@@ -395,19 +431,22 @@ public class StocksActivity extends AppCompatActivity {
             binding.buy.setTextColor(getResources().getColorStateList(R.color.white));
             binding.buttonAction.setText("Купить " + currencyName);
         }
-        binding.percentagesOfBalance25.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance50.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance75.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance100.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance25.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.percentagesOfBalance50.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.percentagesOfBalance75.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.percentagesOfBalance100.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.currencyCountAction.setText("");
     }
 
     private void onClickButtonSell() {
         String currencyName = currency.getApiName().toUpperCase();
+        String currencyCountString = binding.currencyCountAction.getText().toString();
+        if (!(buyMode != true && currencyCountString.trim().length() != 0 && currencyCountString != "")) {
+            binding.percentagesOfBalance25.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance50.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance75.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance100.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
+            binding.percentagesOfBalance25.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.percentagesOfBalance50.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.percentagesOfBalance75.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.percentagesOfBalance100.setTextColor(getResources().getColorStateList(R.color.textShadow));
+            binding.currencyCountAction.setText("");
+        }
         buyMode = false;
         resetPercentagesOfBalanceBooleans();
         if (buyMode != true) {
@@ -425,15 +464,6 @@ public class StocksActivity extends AppCompatActivity {
             binding.buy.setTextColor(getResources().getColorStateList(R.color.white));
             binding.buttonAction.setText("Купить " + currencyName);
         }
-        binding.percentagesOfBalance25.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance50.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance75.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance100.setBackgroundTintList(getResources().getColorStateList(R.color.shadow));
-        binding.percentagesOfBalance25.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.percentagesOfBalance50.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.percentagesOfBalance75.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.percentagesOfBalance100.setTextColor(getResources().getColorStateList(R.color.textShadow));
-        binding.currencyCountAction.setText("");
     }
 
     private void onClickButtonAction() {
@@ -443,7 +473,7 @@ public class StocksActivity extends AppCompatActivity {
                 float currencyEditTextCount = Float.parseFloat(currencyCountString);
                 if (StocksData.getCurrency(currency).getValue() >= currencyEditTextCount && currencyEditTextCount != 0.0f) {
                     StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() - currencyEditTextCount);
-                    StocksData.setCurrency(StocksData.Currency.RUB, currencyEditTextCount * currencyPrice);
+                    StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() + currencyEditTextCount * currencyPrice);
                     binding.currencyCount.setText(String.format(
                             Locale.getDefault(),
                             "%.6f",
@@ -451,7 +481,7 @@ public class StocksActivity extends AppCompatActivity {
                     );
                     binding.rubCount.setText(String.format(
                             Locale.getDefault(),
-                            "%.6f",
+                            "%.2f",
                             StocksData.getCurrency(StocksData.Currency.RUB).getValue())
                     );
                     binding.currencyCountAction.setText("");
@@ -467,9 +497,17 @@ public class StocksActivity extends AppCompatActivity {
                 float currencyEditTextCount = Float.parseFloat(currencyCountString);
                 if (StocksData.getCurrency(StocksData.Currency.RUB).getValue() >= currencyEditTextCount * currencyPrice && currencyEditTextCount != 0.0f) {
                     StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() - currencyEditTextCount * currencyPrice);
-                    StocksData.setCurrency(currency, currencyEditTextCount);
-                    binding.currencyCount.setText(StocksData.getCurrency(currency).getValue() + "");
-                    binding.rubCount.setText(StocksData.getCurrency(StocksData.Currency.RUB).getValue() + "");
+                    StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() + currencyEditTextCount);
+                    binding.currencyCount.setText(String.format(
+                            Locale.getDefault(),
+                            "%.6f",
+                            StocksData.getCurrency(currency).getValue())
+                    );
+                    binding.rubCount.setText(String.format(
+                            Locale.getDefault(),
+                            "%.2f",
+                            StocksData.getCurrency(StocksData.Currency.RUB).getValue())
+                    );
                     binding.currencyCountAction.setText("");
                 } else {
                     notEnoughMoney();
@@ -489,6 +527,7 @@ public class StocksActivity extends AppCompatActivity {
     }
 
     private void loadStocksData() {
+        chartIsHide = getSharedPreferences("graph_data", Context.MODE_PRIVATE).getBoolean("chartIsHide", false);
         String currencyName = currency.getApiName().toUpperCase();
         StocksData.getCurrency(currency).observe(this, value -> {
             binding.currencyCount.setText(

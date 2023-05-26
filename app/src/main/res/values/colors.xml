@@ -16,4 +16,5 @@
     <color name="alpha">#00858E9B</color>
     <color name="toolbar">#EDB918</color>
     <color name="toolbarText">#FFFFFFFF</color>
+    <color name="hide">#949AA5</color>
 </resources>

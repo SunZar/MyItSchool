@@ -1,5 +1,6 @@
 package ru.sunzar.myitschool.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myitschool.R;
 import com.example.myitschool.databinding.FragmentWalletBinding;
 
 import java.text.SimpleDateFormat;
@@ -35,6 +37,11 @@ public class WalletFragment extends Fragment {
     private final ArrayList<String> data_namesId = new ArrayList<>();
     private final ArrayList<String> data_displayNames = new ArrayList<>();
 
+    private double total_balance = 0;
+
+    private boolean balanceIsHide = false;
+    private boolean nullBalancesIsHide = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,6 +55,52 @@ public class WalletFragment extends Fragment {
         binding.container.setAdapter(adapter);
         searchPrice();
         binding.title.setText("Кошелёк");
+
+        binding.hideBalance.setOnClickListener(view1 -> {
+            onClickButtonHideBalance();
+        });
+
+        binding.hideNullBalances.setOnClickListener(view1 -> {
+            onClickButtonHideNullBalances();
+        });
+    }
+
+    private void onClickButtonHideBalance() {
+        if (balanceIsHide == false) {
+            balanceIsHide = true;
+            binding.hideBalance.setBackground(getResources().getDrawable(R.drawable.eye_off));
+            binding.hideBalance.setBackgroundTintList(getResources().getColorStateList(R.color.hide));
+            binding.totalBalance.setText("****** RUB");
+            adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
+        } else {
+            balanceIsHide = false;
+            binding.hideBalance.setBackground(getResources().getDrawable(R.drawable.eye));
+            binding.hideBalance.setBackgroundTintList(getResources().getColorStateList(R.color.toolbar));
+            binding.totalBalance.setText(String.format(
+                    Locale.getDefault(),
+                    "%.2f",
+                    total_balance
+            ) + " RUB");
+            adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
+        }
+        this.getActivity().getSharedPreferences("wallet_data", Context.MODE_PRIVATE).edit().putBoolean("balanceIsHide", balanceIsHide).apply();
+        adapter.notifyDataSetChanged();
+    }
+
+    private void onClickButtonHideNullBalances() {
+        if (nullBalancesIsHide == false) {
+            nullBalancesIsHide = true;
+            binding.hideNullBalances.setBackground(getResources().getDrawable(R.drawable.eye_off));
+            binding.hideNullBalances.setBackgroundTintList(getResources().getColorStateList(R.color.hide));
+            adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
+        } else {
+            nullBalancesIsHide = false;
+            binding.hideNullBalances.setBackground(getResources().getDrawable(R.drawable.eye));
+            binding.hideNullBalances.setBackgroundTintList(getResources().getColorStateList(R.color.toolbar));
+            adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
+        }
+        this.getActivity().getSharedPreferences("wallet_data", Context.MODE_PRIVATE).edit().putBoolean("nullBalancesIsHide", nullBalancesIsHide).apply();
+        adapter.notifyDataSetChanged();
     }
 
     private void searchPrice() {
@@ -83,23 +136,36 @@ public class WalletFragment extends Fragment {
                 currenciesNew.put(name, price);
             }
         });
-        double total = 0;
+        total_balance = 0;
         for (StocksData.Currency value : StocksData.Currency.values()) {
             data_price.add(currenciesNew.get(value.getApiName()));
             data_namesId.add(value.getApiName());
             data_displayNames.add(value.getDisplayName());
             if (value.getApiName() != "btc") {
-                total += StocksData.getCurrency(value).getValue() * currenciesNew.getOrDefault(value.getApiName(), 0f);
+                total_balance += StocksData.getCurrency(value).getValue() * currenciesNew.getOrDefault(value.getApiName(), 0f);
             }
-            Log.d("tagg", total + "");
+            Log.d("tagg", total_balance + "");
         }
         loadStocksData();
         binding.totalBalance.setText(String.format(
                 Locale.getDefault(),
-                "%s: %.2f",
-                StocksData.Currency.RUB.getApiName().toUpperCase(),
-                total
+                "%.2f",
+                total_balance
         ) + " RUB");
+
+        if (balanceIsHide == true) {
+            binding.hideBalance.setBackground(getResources().getDrawable(R.drawable.eye_off));
+            binding.hideBalance.setBackgroundTintList(getResources().getColorStateList(R.color.hide));
+            binding.totalBalance.setText("****** RUB");
+            adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
+            adapter.notifyDataSetChanged();
+        }
+        if (nullBalancesIsHide == true) {
+            binding.hideNullBalances.setBackground(getResources().getDrawable(R.drawable.eye_off));
+            binding.hideNullBalances.setBackgroundTintList(getResources().getColorStateList(R.color.hide));
+            adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private void showLoading() {
@@ -111,11 +177,13 @@ public class WalletFragment extends Fragment {
     }
 
     private void loadStocksData() {
+        balanceIsHide = this.getActivity().getSharedPreferences("wallet_data", Context.MODE_PRIVATE).getBoolean("balanceIsHide", false);
+        nullBalancesIsHide = this.getActivity().getSharedPreferences("wallet_data", Context.MODE_PRIVATE).getBoolean("nullBalancesIsHide", false);
         for (StocksData.Currency value : StocksData.Currency.values()) {
             data_count.add(StocksData.getCurrency(value).getValue());
         }
 
-        adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10);
+        adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
         Arrays.asList(StocksData.Currency.values()).forEach(item -> {
 
         });

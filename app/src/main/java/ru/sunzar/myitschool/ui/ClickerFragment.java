@@ -17,12 +17,14 @@ import androidx.annotation.Nullable;
 import com.example.myitschool.R;
 import com.example.myitschool.databinding.FragmentClickerBinding;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import ru.sunzar.myitschool.data.MiningData;
+import ru.sunzar.myitschool.data.ShopData;
 import ru.sunzar.myitschool.data.StocksData;
 
-public class ClickerActivity extends ToolbarBaseFragment {
+public class ClickerFragment extends ToolbarBaseFragment {
     private FragmentClickerBinding binding;
 
     private SharedPreferences sharedMiningData;
@@ -67,6 +69,11 @@ public class ClickerActivity extends ToolbarBaseFragment {
             onClickButtonBuyVideocard();
         });
 
+        binding.info.setOnClickListener(view6 -> {
+            DialogWindow dialogWindow = new DialogWindow();
+            dialogWindow.show(getChildFragmentManager(), "dialogWindow");
+        });
+
         baseBinding.title.setText("Майнинг");
 
         loadPref();
@@ -79,6 +86,7 @@ public class ClickerActivity extends ToolbarBaseFragment {
         updatePercentageDurability();
         updateButtonBuyVideocard();
         updateRubCountStocks();
+        updateVideocardModel();
 
         offlineHandler = new Handler() {
             public void handleMessage(Message msg) {
@@ -274,7 +282,7 @@ public class ClickerActivity extends ToolbarBaseFragment {
             updateBtcCountMining();
             long currentClickMills = System.currentTimeMillis();
             if (currentClickMills - lastClickMills > 1000)
-                lastClickMills = System.currentTimeMillis();
+                lastClickMills = currentClickMills;
 //            if (fanCount < 4) {
 //                fanCount += 1;
 //                switch (fanCount) {
@@ -319,39 +327,51 @@ public class ClickerActivity extends ToolbarBaseFragment {
     }
 
     private void onClickButtonUpgradeAddMoney() {
-        if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() >= MiningData.btc_add * 100) {
-            StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() - MiningData.btc_add * 100);
-            MiningData.btc_add += 0.000005f;
-            MiningData.btc_add = (float) Math.ceil(MiningData.btc_add * 10000) / 10000;
-            updateUpgradeAddMoney();
-            updateBtcCountMining();
-            Toast.makeText(this.getActivity(), "Улучшение куплено!", Toast.LENGTH_SHORT).show();
+        if (shownBrokenVideocard == false) {
+            if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() >= MiningData.btc_add * 100) {
+                StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() - MiningData.btc_add * 100);
+                MiningData.btc_add += 0.000005f;
+                MiningData.btc_add = (float) Math.ceil(MiningData.btc_add * 10000) / 10000;
+                updateUpgradeAddMoney();
+                updateBtcCountMining();
+                Toast.makeText(this.getActivity(), "Улучшение куплено!", Toast.LENGTH_SHORT).show();
+            } else {
+                notEnoughMoney();
+            }
         } else {
-            notEnoughMoney();
+            buyNewVideocard();
         }
     }
 
     private void onClickButtonUpgradeOfflineMoney() {
-        if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() >= (MiningData.btc_offline_count + 0.0001f) * 200) {
-            StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() - (MiningData.btc_offline_count + 0.0001f) * 200);
-            MiningData.btc_offline_count += 0.0001f;
-            updateUpgradeAddOfflineMoney();
-            updateBtcCountMining();
-            Toast.makeText(this.getActivity(), "Улучшение куплено!", Toast.LENGTH_SHORT).show();
+        if (shownBrokenVideocard == false) {
+            if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() >= (MiningData.btc_offline_count + 0.0001f) * 200) {
+                StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() - (MiningData.btc_offline_count + 0.0001f) * 200);
+                MiningData.btc_offline_count += 0.0001f;
+                updateUpgradeAddOfflineMoney();
+                updateBtcCountMining();
+                Toast.makeText(this.getActivity(), "Улучшение куплено!", Toast.LENGTH_SHORT).show();
+            } else {
+                notEnoughMoney();
+            }
         } else {
-            notEnoughMoney();
+            buyNewVideocard();
         }
     }
 
     private void onClickButtonAddOfflineMoneyCount() {
-        if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() >= (101 - MiningData.btc_offline_time * 10) * 0.05f && MiningData.btc_offline_time >= 5.5f) {
-            StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() - (101 - MiningData.btc_offline_time * 10) * 0.05f);
-            MiningData.btc_offline_time -= 0.5f;
-            updateButtonUpgradeOfflineMoneyCount();
-            updateBtcCountMining();
-            Toast.makeText(this.getActivity(), "Улучшение куплено!", Toast.LENGTH_SHORT).show();
+        if (shownBrokenVideocard == false) {
+            if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() >= (101 - MiningData.btc_offline_time * 10) * 0.05f && MiningData.btc_offline_time >= 5.5f) {
+                StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() - (101 - MiningData.btc_offline_time * 10) * 0.05f);
+                MiningData.btc_offline_time -= 0.5f;
+                updateButtonUpgradeOfflineMoneyCount();
+                updateBtcCountMining();
+                Toast.makeText(this.getActivity(), "Улучшение куплено!", Toast.LENGTH_SHORT).show();
+            } else {
+                notEnoughMoney();
+            }
         } else {
-            notEnoughMoney();
+            buyNewVideocard();
         }
     }
 
@@ -370,7 +390,11 @@ public class ClickerActivity extends ToolbarBaseFragment {
     }
 
     private void notEnoughMoney() {
-        Toast.makeText(this.getActivity(), "Недостаточно BTC", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this.getActivity(), "Недостаточно средств", Toast.LENGTH_SHORT).show();
+    }
+
+    private void buyNewVideocard() {
+        Toast.makeText(this.getActivity(), "Вы должны купить новую видеокарту", Toast.LENGTH_SHORT).show();
     }
 
     private void toastOnBreakingVideocard() {
@@ -446,6 +470,26 @@ public class ClickerActivity extends ToolbarBaseFragment {
 
     private void updateRubCountStocks() {
         //TODO: binding.rubCount.setText("RUB: " + StocksData.rub_count);
+    }
+
+    private void updateVideocardModel() {
+        boolean flagToStop = false;
+        ArrayList<Boolean> productsArray = new ArrayList<>();
+        for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
+            productsArray.add(this.getActivity().getSharedPreferences("shop_data", MODE_PRIVATE).getBoolean(products.getDisplayName(), false));
+        }
+        for (int i = 0; i < productsArray.size(); i++) {
+            if (productsArray.get(i) == true && flagToStop != true) {
+                int j = 0;
+                for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
+                    if (i == j && flagToStop != true) {
+                        binding.videocardModel.setText(products.getDisplayName());
+                        flagToStop = true;
+                    }
+                    j++;
+                }
+            }
+        }
     }
 
 
