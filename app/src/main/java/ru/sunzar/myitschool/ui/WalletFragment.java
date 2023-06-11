@@ -112,8 +112,10 @@ public class WalletFragment extends Fragment {
             Log.d("LOG", "RESPONSE SUCCESS: " + stocksSearchResponseResource.toString());
             if (stocksSearchResponseResource instanceof Resource.Success) {
                 onUpdateData((Resource.Success<StocksSearchResponse>) stocksSearchResponseResource);
+                binding.progressBar.setVisibility(View.GONE);
             } else if (stocksSearchResponseResource instanceof Resource.Error) {
                 showError();
+                binding.progressBar.setVisibility(View.GONE);
             } else if (stocksSearchResponseResource instanceof Resource.Loading) {
                 showLoading(); //Не забудь скрыть загрузку в других состояниях
             }
@@ -169,7 +171,7 @@ public class WalletFragment extends Fragment {
     }
 
     private void showLoading() {
-
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     private void showError() {
@@ -184,9 +186,9 @@ public class WalletFragment extends Fragment {
         }
 
         adapter.setData(data_count, data_price, data_namesId, data_displayNames, 10, nullBalancesIsHide, balanceIsHide);
-        Arrays.asList(StocksData.Currency.values()).forEach(item -> {
-
-        });
+//        Arrays.asList(StocksData.Currency.values()).forEach(item -> {
+//
+//        });
 
         adapter.notifyDataSetChanged();
     }

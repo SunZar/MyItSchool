@@ -26,19 +26,26 @@ public class ShopData {
         TRX("RTX 3070 Ti", 100, 12),
         TRX("RTX 3080", 100, 12),
         TRX("RTX 4060 Ti", 100, 12),*/
-        RTX_4070("RTX 4070", 100_000, 0),
-        RTX_4070_Ti("RTX 4070 Ti", 120_000, 1),
-        RTX_4080("RTX 4080", 200_000, 2),
-        RTX_4090("RTX 4090", 300_000, 3);
+        SMALL_HOUSE("Маленький дом", 1_200_000, 0, "property"),
+        MEDIUM_HOUSE("Средний дом", 2_500_000, 1, "property"),
+        BIG_HOUSE("Большой дом", 5_800_000, 2, "property"),
+        BICYCLE("Велосипед", 20_000, 3, "transport"),
+        SCOOTER("Самокат", 15_000, 4, "transport"),
+        ELECTROSCOOTER("Электросамокат", 60_000, 5, "transport"),
+        CAR("Машина", 400_000, 6, "transport"),
+        PUSH_BUTTON_PHONE("Кнопочный телефон", 5_000, 7, "phone"),
+        SMART_PHONE("Сенсорный телефон", 20_000, 8, "phone");
 
         private final String displayName;
         private final float price;
         private final int index;
+        private final String type;
 
-        ShopProducts(String displayName, float price, int index) {
+        ShopProducts(String displayName, float price, int index, String type) {
             this.displayName = displayName;
             this.price = price;
             this.index = index;
+            this.type = type;
         }
 
         public String getDisplayName() {
@@ -51,6 +58,10 @@ public class ShopData {
 
         private int getIndex() {
             return index;
+        }
+
+        public String getType() {
+            return type;
         }
     }
 

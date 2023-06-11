@@ -83,8 +83,13 @@ public class StocksActivity extends AppCompatActivity {
             Log.d("LOG", "RESPONSE SUCCESS: " + stocksSearchResponseResource.toString());
             if (stocksSearchResponseResource instanceof Resource.Success) {
                 onUpdateGraphData((Resource.Success<StockGraphData>) stocksSearchResponseResource);
+                binding.progressBar.setVisibility(View.GONE);
+                if (chartIsHide == false) {
+                    binding.plot.setVisibility(View.VISIBLE);
+                }
             } else if (stocksSearchResponseResource instanceof Resource.Error) {
                 showError();
+                binding.progressBar.setVisibility(View.GONE);
             } else if (stocksSearchResponseResource instanceof Resource.Loading) {
                 showLoading(); //Не забудь скрыть загрузку в других состояниях
             }
@@ -474,6 +479,9 @@ public class StocksActivity extends AppCompatActivity {
                 if (StocksData.getCurrency(currency).getValue() >= currencyEditTextCount && currencyEditTextCount != 0.0f) {
                     StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() - currencyEditTextCount);
                     StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() + currencyEditTextCount * currencyPrice);
+                    if (StocksData.getCurrency(currency).getValue() < 0.000005f) {
+                        StocksData.setCurrency(currency, 0f);
+                    }
                     binding.currencyCount.setText(String.format(
                             Locale.getDefault(),
                             "%.6f",
@@ -570,7 +578,7 @@ public class StocksActivity extends AppCompatActivity {
     }
 
     private void showLoading() {
-
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     private void showError() {

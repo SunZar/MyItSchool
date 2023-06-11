@@ -69,7 +69,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         if (nullBalancesIsHide == true) {
             data_size = 0;
             data_count.forEach(count -> {
-                if (count != 0.0f) {
+                if (count > 0.000005f) {
                     data_size += 1;
                 }
             });
@@ -88,7 +88,7 @@ public class WalletAdapter extends RecyclerView.Adapter<WalletAdapter.ViewHolder
         }
 
         public void bind(float count, float price, String data_namesId, String data_displayNames, float rub, boolean nullBalancesIsHide, boolean balanceIsHide) {
-            if (nullBalancesIsHide == false || count != 0.0f) {
+            if (nullBalancesIsHide == false || count > 0.000005f) {
                 if (balanceIsHide == false) {
                     itemBinding.id.setText(data_namesId.toUpperCase());
                     itemBinding.name.setText("(" + data_displayNames + ")");

@@ -24,14 +24,15 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
     private final ArrayList<Boolean> data_is_bought = new ArrayList<>();
     private boolean isBoughtNow;
 
-    public void setData(Collection<String> dataName, Collection<Float> dataPrice, Collection<Boolean> dataIsBought) {
+    public void setData() {
         data_name.clear();
-        data_name.addAll(dataName);
         data_price.clear();
-        data_price.addAll(dataPrice);
         data_is_bought.clear();
-        data_is_bought.addAll(dataIsBought);
-        notifyDataSetChanged();
+        for (ShopData.ShopProducts value : ShopData.ShopProducts.values()) {
+            data_name.add(value.getDisplayName());
+            data_price.add(value.getPrice());
+            data_is_bought.add(ShopData.getIsBought(value));
+        }
     }
 
     @NonNull
@@ -51,15 +52,19 @@ public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ViewHolder> {
         isBoughtNow = false;
         holder.itemView.setOnClickListener(view -> {
             if (StocksData.getCurrency(StocksData.Currency.RUB).getValue() >= data_price.get(position) && ShopData.getIsBought(ShopData.getProductByIndex(position)) == false) {
-                for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
-                    ShopData.setIsBought(products, false);
-                }
-                notifyDataSetChanged();
+                //int i = 0;
+                //for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
+                //    ShopData.setIsBought(products, false);
+                //    data_is_bought.add(i, false);
+                //    i++;
+                //}
                 StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() - data_price.get(position));
                 ShopData.setIsBought(ShopData.getProductByIndex(position), true);
                 Toast.makeText(view.getContext(), "Куплено! Обновите магазин для изменения данных", Toast.LENGTH_SHORT).show();
                 isBoughtNow = true;
                 holder.bind(data_name.get(position), data_price.get(position), data_is_bought.get(position), isBoughtNow);
+                data_is_bought.add(position, isBoughtNow);
+                notifyDataSetChanged();
             }
         });
         holder.bind(data_name.get(position), data_price.get(position), data_is_bought.get(position), isBoughtNow);

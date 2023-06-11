@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myitschool.R;
 import com.example.myitschool.databinding.ActivityMainBinding;
 
+import ru.sunzar.myitschool.data.ShopData;
 import ru.sunzar.myitschool.data.StocksData;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         updateCurrenciesFromShared();
         saveCurrenciesToShared();
+        updateShopFromShared();
 
         binding.menuNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.wallet:
                     onClickButtonWallet();
+                    break;
+                case R.id.profile:
+                    onClickButtonProfile();
                     break;
             }
             return true;
@@ -58,6 +63,13 @@ public class MainActivity extends AppCompatActivity {
             StocksData.getCurrency(currency).observe(this, value -> {
                 preferences.putFloat(currency.getApiName(), value).apply();
             });
+        }
+    }
+
+    private void updateShopFromShared() {
+        SharedPreferences preferences = getSharedPreferences("shop_data", MODE_PRIVATE);
+        for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
+            ShopData.setIsBought(products, preferences.getBoolean(products.getDisplayName(), false));
         }
     }
 
@@ -87,6 +99,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void onClickButtonWallet() {
         WalletFragment fragment = new WalletFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .commit();
+    }
+
+    private void onClickButtonProfile() {
+        ProfileFragment fragment = new ProfileFragment();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, fragment)

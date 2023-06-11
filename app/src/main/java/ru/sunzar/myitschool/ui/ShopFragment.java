@@ -43,9 +43,9 @@ public class ShopFragment extends ToolbarBaseFragment {
         binding.container.setAdapter(adapter);
         baseBinding.title.setText("Магазин");
 
-        binding.updateShop.setOnClickListener(view1 -> {
-            loadShopData();
-        });
+//        binding.updateShop.setOnClickListener(view1 -> {
+//            loadShopData();
+//        });
 
         updateCurrenciesFromShared();
         saveCurrenciesToShared();
@@ -53,17 +53,17 @@ public class ShopFragment extends ToolbarBaseFragment {
     }
 
     private void loadShopData() {
-        data_name.clear();
-        data_price.clear();
-        data_is_bought.clear();
-        for (ShopData.ShopProducts value : ShopData.ShopProducts.values()) {
-            data_name.add(value.getDisplayName());
-            data_price.add(value.getPrice());
-        }
-        for (ShopData.ShopProducts value : ShopData.ShopProducts.values()) {
-            data_is_bought.add(ShopData.getIsBought(value));
-        }
-        adapter.setData(data_name, data_price, data_is_bought);
+//        data_name.clear();
+//        data_price.clear();
+//        data_is_bought.clear();
+//        for (ShopData.ShopProducts value : ShopData.ShopProducts.values()) {
+//            data_name.add(value.getDisplayName());
+//            data_price.add(value.getPrice());
+//        }
+//        for (ShopData.ShopProducts value : ShopData.ShopProducts.values()) {
+//            data_is_bought.add(ShopData.getIsBought(value));
+//        }
+        adapter.setData();
         adapter.notifyDataSetChanged();
     }
 

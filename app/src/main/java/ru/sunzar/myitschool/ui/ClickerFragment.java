@@ -2,6 +2,7 @@ package ru.sunzar.myitschool.ui;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.animation.ObjectAnimator;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,10 @@ public class ClickerFragment extends ToolbarBaseFragment {
     private boolean shownBrokenVideocard = false;
     private boolean onPauseThread = false;
     private int fanCount = 0;
+    private int duration = 2000;
+    private int aaa = 1;
+
+    private ObjectAnimator button;
 
     @Override
     public View onCreateChildView(@NonNull ViewGroup parent, @Nullable Bundle savedInstanceState) {
@@ -70,8 +75,8 @@ public class ClickerFragment extends ToolbarBaseFragment {
         });
 
         binding.info.setOnClickListener(view6 -> {
-            DialogWindow dialogWindow = new DialogWindow();
-            dialogWindow.show(getChildFragmentManager(), "dialogWindow");
+            DialogWindowTutorial dialogWindowTutorial = new DialogWindowTutorial();
+            dialogWindowTutorial.show(getChildFragmentManager(), "dialogWindowTutorial");
         });
 
         baseBinding.title.setText("Майнинг");
@@ -86,7 +91,7 @@ public class ClickerFragment extends ToolbarBaseFragment {
         updatePercentageDurability();
         updateButtonBuyVideocard();
         updateRubCountStocks();
-        updateVideocardModel();
+        //updateVideocardModel();
 
         offlineHandler = new Handler() {
             public void handleMessage(Message msg) {
@@ -277,6 +282,14 @@ public class ClickerFragment extends ToolbarBaseFragment {
 
     private void onClickButtonClick() {
         if (MiningData.percentage_durability_videacard > 0) {
+//            duration = (int) (duration / 1.2f);
+//            if (aaa == 1) {
+//                button = ObjectAnimator.ofMultiFloat(binding.buttonClick, "rotation", new int[]{5, 10, 15, 20, 50, 100, 250, 360});
+//                aaa = 1;
+//            }
+//            button.setDuration(duration);
+//            button.start();
+
             StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() + (float) Math.floor(StocksData.getCurrency(StocksData.Currency.ETH).getValue() + MiningData.btc_add * 1000000) / 1000000);
             //StocksData.eth_count = StocksData.eth_count + (float) Math.floor(StocksData.eth_count + MiningData.btc_add * 1000) / 1000;
             updateBtcCountMining();
@@ -483,7 +496,7 @@ public class ClickerFragment extends ToolbarBaseFragment {
                 int j = 0;
                 for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
                     if (i == j && flagToStop != true) {
-                        binding.videocardModel.setText(products.getDisplayName());
+                        //binding.videocardModel.setText(products.getDisplayName());
                         flagToStop = true;
                     }
                     j++;

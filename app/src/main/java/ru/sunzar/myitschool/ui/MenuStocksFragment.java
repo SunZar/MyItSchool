@@ -68,8 +68,10 @@ public class MenuStocksFragment extends ToolbarBaseFragment {
             Log.d("LOG", "RESPONSE SUCCESS: " + stocksSearchResponseResource.toString());
             if (stocksSearchResponseResource instanceof Resource.Success) {
                 onUpdateData((Resource.Success<StocksSearchResponse>) stocksSearchResponseResource);
+                baseBinding.progressBar.setVisibility(View.GONE);
             } else if (stocksSearchResponseResource instanceof Resource.Error) {
                 showError();
+                baseBinding.progressBar.setVisibility(View.GONE);
             } else if (stocksSearchResponseResource instanceof Resource.Loading) {
                 showLoading(); //Не забудь скрыть загрузку в других состояниях
             }
@@ -92,7 +94,7 @@ public class MenuStocksFragment extends ToolbarBaseFragment {
     }
 
     private void showLoading() {
-
+        baseBinding.progressBar.setVisibility(View.VISIBLE);
     }
 
     private void showError() {
