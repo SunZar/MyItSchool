@@ -17,4 +17,7 @@
     <color name="toolbar">#EDB918</color>
     <color name="toolbarText">#FFFFFFFF</color>
     <color name="hide">#949AA5</color>
+    <color name="shop">#C45656</color>
+    <color name="fon">#172B05</color>
+    <color name="text">#02eb04</color>
 </resources>

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -98,7 +99,7 @@ public class MenuStocksFragment extends ToolbarBaseFragment {
     }
 
     private void showError() {
-
+        Toast.makeText(this.getActivity(), "Если у Вас всё в порядке с интернетом, то биржа закрыта и загрузить данные невозможно, приходите позже", Toast.LENGTH_LONG).show();
     }
 }
 

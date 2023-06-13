@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myitschool.R;
 import com.example.myitschool.databinding.ActivityMainBinding;
 
-import ru.sunzar.myitschool.data.ShopData;
+import ru.sunzar.myitschool.data.ProfileData;
 import ru.sunzar.myitschool.data.StocksData;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
         updateCurrenciesFromShared();
         saveCurrenciesToShared();
-        updateShopFromShared();
 
         binding.menuNavigation.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -58,19 +57,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveCurrenciesToShared() {
-        final SharedPreferences.Editor preferences = getSharedPreferences("stocks_data", MODE_PRIVATE).edit();
+        final SharedPreferences.Editor preferencesProfileData = getSharedPreferences("stocks_data", MODE_PRIVATE).edit();
         for (StocksData.Currency currency : StocksData.Currency.values()) {
             StocksData.getCurrency(currency).observe(this, value -> {
-                preferences.putFloat(currency.getApiName(), value).apply();
+                preferencesProfileData.putFloat(currency.getApiName(), value).apply();
             });
         }
-    }
-
-    private void updateShopFromShared() {
-        SharedPreferences preferences = getSharedPreferences("shop_data", MODE_PRIVATE);
-        for (ShopData.ShopProducts products : ShopData.ShopProducts.values()) {
-            ShopData.setIsBought(products, preferences.getBoolean(products.getDisplayName(), false));
-        }
+        final SharedPreferences.Editor editorProfileData = getSharedPreferences("profile_data", MODE_PRIVATE).edit();
+        editorProfileData.putFloat("max_of_ethereum_pref", ProfileData.max_of_ethereum);
+        editorProfileData.putFloat("max_of_rubles_pref", ProfileData.max_of_rubles);
+        editorProfileData.apply();
     }
 
     private void onClickButtonMining() {

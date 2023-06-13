@@ -17,7 +17,7 @@ public class StocksData {
         MATIC("Matic", "matic"),
         DOGE("Doge coin", "doge"),
         CNY("Chinese yuan", "cny"),
-        ETH("Ethereum", "eth"),
+        ETH("Ethereum", "etc"),
         INCH("1inch", "1inch"),
         LTC("Litecoin", "ltc"),
         BNB("Binance coin", "bnb"),

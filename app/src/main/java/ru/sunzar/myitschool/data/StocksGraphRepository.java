@@ -31,7 +31,7 @@ public class StocksGraphRepository {
     public void search(long period, final String currencies) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-        long day = System.currentTimeMillis() - 30_600_000 - TimeUnit.DAYS.toMillis(period);
+        long day = System.currentTimeMillis() - 30_600_000 - TimeUnit.DAYS.toMillis(period - 1);
 
         final Map<String, Resource<StocksSearchResponse>> results = new TreeMap<>();
 
@@ -59,9 +59,15 @@ public class StocksGraphRepository {
                 double temp = 1 / ((Resource.Success<StocksSearchResponse>) result).getValue()
                         .getCurrencies()
                         .get(currencies);
-                values.add(
-                        (float) (Math.ceil((temp + (Math.random() * temp / 100)) * 100) / 100)
-                );
+                if (currencies == StocksData.Currency.ETH.getApiName()) {
+                    values.add(
+                            (float) (Math.ceil((temp * 100 + (Math.random() * temp * 100 / 100)) * 100) / 100)
+                    );
+                } else {
+                    values.add(
+                            (float) (Math.ceil((temp + (Math.random() * temp / 100)) * 100) / 100)
+                    );
+                }
 //                values.add(Math.ceil(
 //                        ((Resource.Success<StocksSearchResponse>) result)
 //                                .getValue()

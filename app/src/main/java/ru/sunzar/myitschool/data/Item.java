@@ -9,7 +9,11 @@ public class Item {
 
     public void setPrice(float price) {
         float temp = 1 / price;
-        this.price = Math.ceil((temp + (Math.random() * temp / 100)) * 100) / 100f;
+        if (currency.getApiName() == StocksData.Currency.ETH.getApiName()) {
+            this.price = Math.ceil((temp * 100 + (Math.random() * temp * 100 / 100)) * 100) / 100f;
+        } else {
+            this.price = Math.ceil((temp + (Math.random() * temp / 100)) * 100) / 100f;
+        }
     }
 
     public Item(StocksData.Currency currency) {

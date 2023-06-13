@@ -23,12 +23,14 @@ import java.util.Locale;
 
 import ru.sunzar.myitschool.data.MiningData;
 import ru.sunzar.myitschool.data.ShopData;
+import ru.sunzar.myitschool.data.ProfileData;
 import ru.sunzar.myitschool.data.StocksData;
 
 public class ClickerFragment extends ToolbarBaseFragment {
     private FragmentClickerBinding binding;
 
     private SharedPreferences sharedMiningData;
+    private SharedPreferences sharedProfileData;
     private SharedPreferences sharedStocksData;
 
     private Handler offlineHandler;
@@ -119,7 +121,7 @@ public class ClickerFragment extends ToolbarBaseFragment {
                         shownBrokenVideocard = false;
                     }
                     if (MiningData.percentage_durability_videacard <= 0 && shownBrokenVideocard == false) {
-                        binding.percentageDurability.setText("Видеокарта сломалась,\nкупите новую в дополнениях");
+                        binding.percentageDurability.setText("Видеокарта перегрелась и сгорела,\nкупите новую в магазине");
                         toastOnBreakingVideocard();
                         shownBrokenVideocard = true;
                     }
@@ -282,43 +284,13 @@ public class ClickerFragment extends ToolbarBaseFragment {
 
     private void onClickButtonClick() {
         if (MiningData.percentage_durability_videacard > 0) {
-//            duration = (int) (duration / 1.2f);
-//            if (aaa == 1) {
-//                button = ObjectAnimator.ofMultiFloat(binding.buttonClick, "rotation", new int[]{5, 10, 15, 20, 50, 100, 250, 360});
-//                aaa = 1;
-//            }
-//            button.setDuration(duration);
-//            button.start();
-
+            ProfileData.amount_of_clicks += 1;
             StocksData.setCurrency(StocksData.Currency.ETH, StocksData.getCurrency(StocksData.Currency.ETH).getValue() + (float) Math.floor(StocksData.getCurrency(StocksData.Currency.ETH).getValue() + MiningData.btc_add * 1000000) / 1000000);
             //StocksData.eth_count = StocksData.eth_count + (float) Math.floor(StocksData.eth_count + MiningData.btc_add * 1000) / 1000;
             updateBtcCountMining();
             long currentClickMills = System.currentTimeMillis();
             if (currentClickMills - lastClickMills > 1000)
                 lastClickMills = currentClickMills;
-//            if (fanCount < 4) {
-//                fanCount += 1;
-//                switch (fanCount) {
-//                    case 0:
-//                        binding.buttonClick.setBackground(getResources().getDrawable(R.drawable.graphics_card36));
-//                        break;
-//                    case 1:
-//                        binding.buttonClick.setBackground(getResources().getDrawable(R.drawable.graphics_card27));
-//                        break;
-//                    case 2:
-//                        binding.buttonClick.setBackground(getResources().getDrawable(R.drawable.graphics_card18));
-//                        break;
-//                    case 3:
-//                        binding.buttonClick.setBackground(getResources().getDrawable(R.drawable.graphics_card9));
-//                        break;
-//                    case 4:
-//                        binding.buttonClick.setBackground(getResources().getDrawable(R.drawable.graphics_card1));
-//                        break;
-//                }
-//            } else {
-//                binding.buttonClick.setBackground(getResources().getDrawable(R.drawable.graphics_card36));
-//                fanCount = 0;
-//            }
             if (fanCount < 2) {
                 fanCount += 1;
                 switch (fanCount) {
@@ -396,6 +368,7 @@ public class ClickerFragment extends ToolbarBaseFragment {
             updateButtonBuyVideocard();
             updatePercentageDurability();
             updateBtcCountMining();
+            shownBrokenVideocard = false;
             Toast.makeText(this.getActivity(), "Видеокарта куплена! Вы можете продолжать майнить", Toast.LENGTH_SHORT).show();
         } else {
             notEnoughMoney();
@@ -512,8 +485,10 @@ public class ClickerFragment extends ToolbarBaseFragment {
 //        mySP = this.getPreferences(MODE_PRIVATE);
 //        mySP = getSharedPreferences("jlj", MODE_PRIVATE);
         sharedMiningData = this.getActivity().getSharedPreferences("mining_data", MODE_PRIVATE);
+        sharedProfileData = this.getActivity().getSharedPreferences("profile_data", MODE_PRIVATE);
         //sharedStocksData = this.getActivity().getSharedPreferences("stocks_data", MODE_PRIVATE);
         SharedPreferences.Editor editorMiningData = sharedMiningData.edit();
+        SharedPreferences.Editor editorProfileData = sharedProfileData.edit();
         //SharedPreferences.Editor editorStocksData = sharedStocksData.edit();
 
         //editorStocksData.putFloat("eth_count_pref", StocksData.eth_count);
@@ -521,8 +496,9 @@ public class ClickerFragment extends ToolbarBaseFragment {
         editorMiningData.putFloat("btc_offline_count_pref", MiningData.btc_offline_count);
         editorMiningData.putFloat("btc_offline_time_pref", MiningData.btc_offline_time);
         editorMiningData.putInt("percentage_durability_videacard_pref", MiningData.percentage_durability_videacard);
-        editorMiningData.putInt("percentage_decrease_pref", MiningData.percentage_decrease);
+        editorProfileData.putInt("amount_of_clicks_pref", ProfileData.amount_of_clicks);
 
+        editorProfileData.apply();
         editorMiningData.apply();
         //editorStocksData.apply();
         //Toast.makeText(this.getActivity(), "Данные сохранены", Toast.LENGTH_SHORT).show();
@@ -531,6 +507,7 @@ public class ClickerFragment extends ToolbarBaseFragment {
     private void loadPref() {
 //        mySP = this.getPreferences(MODE_PRIVATE);
         sharedMiningData = this.getActivity().getSharedPreferences("mining_data", MODE_PRIVATE);
+        sharedProfileData = this.getActivity().getSharedPreferences("profile_data", MODE_PRIVATE);
         //sharedStocksData = this.getActivity().getSharedPreferences("stocks_data", MODE_PRIVATE);
         //
         //StocksData.eth_count = sharedStocksData.getFloat("eth_count_pref", 0);
@@ -540,6 +517,7 @@ public class ClickerFragment extends ToolbarBaseFragment {
         MiningData.btc_offline_time = sharedMiningData.getFloat("btc_offline_time_pref", 10f);
         MiningData.percentage_durability_videacard = sharedMiningData.getInt("percentage_durability_videacard_pref", 100);
         MiningData.percentage_decrease = sharedMiningData.getInt("percentage_decrease_pref", 10);
+        ProfileData.amount_of_clicks = sharedProfileData.getInt("amount_of_clicks_pref", 0);
         //
 
         ///float saveFloat = mySP.getFloat(String.valueOf(SAVE_LEVEL_UPGRADE_OFFLINE_TIME), 10f);

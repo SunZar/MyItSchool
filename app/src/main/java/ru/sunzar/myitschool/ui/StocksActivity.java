@@ -476,25 +476,29 @@ public class StocksActivity extends AppCompatActivity {
         if (buyMode != true) {
             if (currencyCountString.trim().length() != 0 && currencyCountString != "") {
                 float currencyEditTextCount = Float.parseFloat(currencyCountString);
-                if (StocksData.getCurrency(currency).getValue() >= currencyEditTextCount && currencyEditTextCount != 0.0f) {
-                    StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() - currencyEditTextCount);
-                    StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() + currencyEditTextCount * currencyPrice);
-                    if (StocksData.getCurrency(currency).getValue() < 0.000005f) {
-                        StocksData.setCurrency(currency, 0f);
+                if (currencyEditTextCount != 0.0f) {
+                    if (StocksData.getCurrency(currency).getValue() >= currencyEditTextCount) {
+                        StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() - currencyEditTextCount);
+                        StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() + currencyEditTextCount * currencyPrice);
+                        if (StocksData.getCurrency(currency).getValue() < 0.000005f) {
+                            StocksData.setCurrency(currency, 0f);
+                        }
+                        binding.currencyCount.setText(String.format(
+                                Locale.getDefault(),
+                                "%.6f",
+                                StocksData.getCurrency(currency).getValue())
+                        );
+                        binding.rubCount.setText(String.format(
+                                Locale.getDefault(),
+                                "%.2f",
+                                StocksData.getCurrency(StocksData.Currency.RUB).getValue())
+                        );
+                        binding.currencyCountAction.setText("");
+                    } else {
+                        notEnoughMoney();
                     }
-                    binding.currencyCount.setText(String.format(
-                            Locale.getDefault(),
-                            "%.6f",
-                            StocksData.getCurrency(currency).getValue())
-                    );
-                    binding.rubCount.setText(String.format(
-                            Locale.getDefault(),
-                            "%.2f",
-                            StocksData.getCurrency(StocksData.Currency.RUB).getValue())
-                    );
-                    binding.currencyCountAction.setText("");
                 } else {
-                    notEnoughMoney();
+                    enterNumber();
                 }
             } else {
                 enterNumber();
@@ -503,22 +507,26 @@ public class StocksActivity extends AppCompatActivity {
         else {
             if (currencyCountString.trim().length() != 0 && currencyCountString != "") {
                 float currencyEditTextCount = Float.parseFloat(currencyCountString);
-                if (StocksData.getCurrency(StocksData.Currency.RUB).getValue() >= currencyEditTextCount * currencyPrice && currencyEditTextCount != 0.0f) {
-                    StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() - currencyEditTextCount * currencyPrice);
-                    StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() + currencyEditTextCount);
-                    binding.currencyCount.setText(String.format(
-                            Locale.getDefault(),
-                            "%.6f",
-                            StocksData.getCurrency(currency).getValue())
-                    );
-                    binding.rubCount.setText(String.format(
-                            Locale.getDefault(),
-                            "%.2f",
-                            StocksData.getCurrency(StocksData.Currency.RUB).getValue())
-                    );
-                    binding.currencyCountAction.setText("");
+                if (currencyEditTextCount != 0.0f) {
+                    if (StocksData.getCurrency(StocksData.Currency.RUB).getValue() >= currencyEditTextCount * currencyPrice) {
+                        StocksData.setCurrency(StocksData.Currency.RUB, StocksData.getCurrency(StocksData.Currency.RUB).getValue() - currencyEditTextCount * currencyPrice);
+                        StocksData.setCurrency(currency, StocksData.getCurrency(currency).getValue() + currencyEditTextCount);
+                        binding.currencyCount.setText(String.format(
+                                Locale.getDefault(),
+                                "%.6f",
+                                StocksData.getCurrency(currency).getValue())
+                        );
+                        binding.rubCount.setText(String.format(
+                                Locale.getDefault(),
+                                "%.2f",
+                                StocksData.getCurrency(StocksData.Currency.RUB).getValue())
+                        );
+                        binding.currencyCountAction.setText("");
+                    } else {
+                        notEnoughMoney();
+                    }
                 } else {
-                    notEnoughMoney();
+                    enterNumber();
                 }
             } else {
                 enterNumber();
@@ -582,7 +590,7 @@ public class StocksActivity extends AppCompatActivity {
     }
 
     private void showError() {
-
+        Toast.makeText(this, "Если у Вас всё в порядке с интернетом, то биржа закрыта и загрузить данные невозможно, приходите позже", Toast.LENGTH_LONG).show();
     }
 
     private void onUpdateGraphData(Resource.Success<StockGraphData> state) {

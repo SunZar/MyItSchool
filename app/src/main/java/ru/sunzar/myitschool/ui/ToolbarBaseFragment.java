@@ -13,6 +13,7 @@ import com.example.myitschool.databinding.FragmentBaseBinding;
 
 import java.util.Locale;
 
+import ru.sunzar.myitschool.data.ProfileData;
 import ru.sunzar.myitschool.data.StocksData;
 
 public abstract class ToolbarBaseFragment extends Fragment {
@@ -28,14 +29,24 @@ public abstract class ToolbarBaseFragment extends Fragment {
         baseBinding = FragmentBaseBinding.bind(view);
         baseBinding.content.addView(onCreateChildView(baseBinding.content, savedInstanceState));
         StocksData.getCurrency(StocksData.Currency.RUB).observe(
-                getViewLifecycleOwner(), rub -> baseBinding.rub.setText(
+                getViewLifecycleOwner(), rub -> {
+                    baseBinding.rub.setText(
                         String.format(Locale.ENGLISH, "%.2f", rub)
-                )
+                    );
+                    if (StocksData.getCurrency(StocksData.Currency.RUB).getValue() > ProfileData.max_of_rubles) {
+                        ProfileData.max_of_rubles = StocksData.getCurrency(StocksData.Currency.RUB).getValue();
+                    }
+                }
         );
         StocksData.getCurrency(StocksData.Currency.ETH).observe(
-                getViewLifecycleOwner(), eth -> baseBinding.btc.setText(
-                        String.format(Locale.ENGLISH, "%.6f", eth)
-                )
+                getViewLifecycleOwner(), eth -> {
+                    baseBinding.btc.setText(
+                            String.format(Locale.ENGLISH, "%.6f", eth)
+                    );
+                    if (StocksData.getCurrency(StocksData.Currency.ETH).getValue() > ProfileData.max_of_ethereum) {
+                        ProfileData.max_of_ethereum = StocksData.getCurrency(StocksData.Currency.ETH).getValue();
+                    }
+                }
         );
     }
 
